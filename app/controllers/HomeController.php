@@ -14,7 +14,7 @@ class HomeController
     public function index($errorMessage = null)
     {   
         $articleModel = new Article();
-        $articles = $articleModel->getlatestarticles();
+        $articles = $articleModel->getLatestarticles();
         $sliderArticles = $articleModel->get3LatestArticles(); 
     
         require_once __DIR__ . '/../views/user/Home.php';

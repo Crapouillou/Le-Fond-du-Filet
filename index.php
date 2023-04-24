@@ -172,6 +172,7 @@ if (isset($_GET['action'])) {
 
     $homeController = new HomeController();
     $homeController->index();
+    
 }
 
 ?>
