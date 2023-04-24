@@ -79,6 +79,7 @@ if (isset($_GET['action'])) {
 
             $userController = new UserController();
             $userController->logout();
+            
 
         case 'edituser':
             $userController = new UserController();

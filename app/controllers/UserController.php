@@ -140,7 +140,7 @@ class UserController
         session_unset();
         session_destroy();
 
-        require_once 'app/views/user/Home.php';
+        header ("Location: ?action=home");
         exit();
     }
     public function delete()
