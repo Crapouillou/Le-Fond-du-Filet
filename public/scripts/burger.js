@@ -21,3 +21,16 @@ function openNav() {
 function closeNav() {
 nav.style.width = "0%";
 }
+
+
+function checkWindowSize() {
+  if (window.innerWidth < 640) {
+    closeNav();
+  }
+}
+
+// Événement pour détecter le changement de taille de la fenêtre
+window.addEventListener('resize', checkWindowSize);
+
+// Fermer le menu au chargement de la page si la largeur de la fenêtre est inférieure à 640px
+checkWindowSize();
