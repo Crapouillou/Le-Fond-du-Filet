@@ -10,16 +10,15 @@ use App\Models\DbConnect;
 /**
  * *********Liste des méthodes******
  * createUser : créer un utilisateur dans la base de données
- * loginUser : permettre à un utilisateur de se connecter à son profil
+ * userLogin : permettre à un utilisateur de se connecter à son profil
  * editUser : permettre à un utilisateur de modifier son profil
  * deleteUser : permettre à un utilisateur de supprimer son profil
- * getLoggedInUserId : récupérer l'id d'un utilisateur connecté a son profil
- * isLoggedIn : permet de vérifier si un utilisateur est connecté ou non
+ * getUserById : récupérer l'id d'un utilisateur connecté a son profil
  */
 
 class Users extends DbConnect
 {
-    public function createUser( string $pseudo, string $mail, string $password, $roles = null) {
+    public function createUser(  $pseudo,  $mail,  $password, $roles = false) {
       
       $pdo = self::connect();
       
@@ -27,6 +26,10 @@ class Users extends DbConnect
               if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
                 throw new Exception('Email invalide');
             }
+            echo "Mot de passe saisi (createUser) : " . $password . "<br>";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    echo "Hachage du mot de passe (createUser) : " . $hashed_password . "<br>";
+
       $req = $pdo->prepare(
         "INSERT INTO 
             users(
@@ -42,74 +45,88 @@ class Users extends DbConnect
         
         ':handle' =>$pseudo,
         ':mail' => $mail,
-        ':password' =>password_hash($password, PASSWORD_DEFAULT),
-        ':roles' => $roles
+        ':password' =>$hashed_password,
+        ':roles' => intval($roles)
       ]);
-      return true;
+      
+      
     }
-    public function loginUser(string $pseudo, string $password)
-{
-    $pdo = self::connect();
-
-    $req = $pdo->prepare("SELECT * FROM users WHERE handle = :handle");
-    $req->execute([':handle' => $pseudo]);
-    $user = $req->fetch(PDO::FETCH_ASSOC);
-
-    if (!$user || !password_verify($password, $user['password'])) {
+    public function userLogin($handle, $password)
+    {
+        $pdo = self::connect();
+        $req = $pdo->prepare("SELECT * FROM users WHERE handle = :handle");
+        $req->execute(array(':handle' => $handle));
+        $userlog = $req->fetch(PDO::FETCH_ASSOC);
+        if (!$userlog) {
+            throw new Exception('Utilisateur non trouvé');
+        }
+    
         
+    
+        if (!password_verify($password, $userlog['password'])) {
+            throw new Exception('Mot de passe incorrect');
+        }
+    
+        if ($userlog && password_verify($password, $userlog['password'])) {
+            if ($userlog['roles'] == 1) {
+                $_SESSION['admin'] = 1;
+                $_SESSION['handle'] =$handle ;
+                header("Location: " . $_ENV['SITE_URL'] . "?action=homeadmin");
+                exit;
+            }
+        }
+        return $userlog;
     }
 
-    return $user;
+    public function editUser($id_user, $handle, $mail, $password)
+    {
+        // Vérification que les variables sont définies avant de les utiliser
+        if (!isset($id_user)) {
+            die("Identifiant de l'utilisateur manquant");
+        }
+    
+        $pdo = self::connect();
+    
+        $params = [];
+        $sql = "UPDATE users SET ";
+        if (!empty($handle)) {
+            $sql .= "handle = :handle, ";
+            $params[':handle'] = $handle;
+        }
+        if (!empty($mail)) {
+            $sql .= "mail = :mail, ";
+            $params[':mail'] = $mail;
+        }
+        if (!empty($password)) {
+            $sql .= "password = :password, ";
+            $params[':password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
+        $sql = rtrim($sql, ', ');
+        $sql .= " WHERE id_user = :id_user";
+        $params[':id_user'] = $id_user;
+    
+        $req = $pdo->prepare($sql);
+        $req->execute($params);
+    }
     
 
-}
-public function getUserByHandle(int $handle): array
-{
-    $pdo = self::connect();
-    
-    $req = $pdo->prepare("SELECT * FROM users WHERE handle = ?");
-    $req->execute([$handle]);
-    $user = $req->fetch(PDO::FETCH_ASSOC);
-
-    return $user;
-}
-public function editUser(int $id, string $handle, string $mail, string $password)
-{
-    $pdo = self::connect();
-
-    $req = $pdo->prepare(
-        "UPDATE users
-        SET handle = :handle, mail = :mail, password = :password
-        WHERE id = :id"
-    );
-    $req->execute([
-        ':id' => $id,
-        ':handle' => $handle,
-        ':mail' => $mail,
-        ':password' => password_hash($password, PASSWORD_DEFAULT),
-    ]);
-
-    // Mettre à jour les informations de session si nécessaire
-}
 public function deleteUser(int $id)
 {
     $pdo = self::connect();
 
-    $req = $pdo->prepare("DELETE FROM users WHERE id = :id");
+    $req = $pdo->prepare("DELETE FROM users WHERE id_user = :id");
     $req->execute([':id' => $id]);
 
-    // Supprimer les informations de session si nécessaire
+    
+
 }
-public function isLoggedIn() {
-    if(!isset($_SESSION['handle'])) {
-        header("Location: /login.php");
-        exit();
-    }
+public function getUserById($id_user)
+{
+    $pdo = self::connect();
+    $req = $pdo->prepare("SELECT * FROM users WHERE id_user = :id_user");
+    $req->execute(array(':id_user' => $id_user));
+    $user = $req->fetch(PDO::FETCH_ASSOC);
+    return $user;
+}
 }
 
-private function getLoggedInUserId() {
-    $user = new Users();
-    $userDetails = $user->getUserByHandle($_SESSION['handle']);
-    return $userDetails['id'];
-}
-}

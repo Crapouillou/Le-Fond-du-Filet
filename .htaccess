@@ -1,7 +1,14 @@
-RewriteEngine On
-RewriteBase /
+### Accès Interdit
 
-# Rediriger toutes les requêtes vers le fichier index.php, sauf les fichiers réels
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+Options -Indexes
+
+RewriteEngine On
+
+#Interdire l'acces aux dossiers :
+RewriteRule ^(src) - [R=403,L]
+
+# Bloquer l'accès aux fichiers .env, .gitignore, composer.json, composer.lock, README.md
+<FilesMatch "(\.env|\.gitignore|composer\.json|composer\.lock|README\.md)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

@@ -11,6 +11,10 @@ use Dotenv\Dotenv;
     private $dbname ;
     private $username ;
     private $password ;
+    /**
+ * *********Liste des méthodes******
+ * connect () : permet la& connexion à la abse donnée
+ */ 
     public function __construct()
     {
       $dotenv = Dotenv::createImmutable('C:\Users\kercode07\Desktop\BackEnd\sitefoot');

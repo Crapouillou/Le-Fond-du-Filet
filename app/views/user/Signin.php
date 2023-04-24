@@ -29,7 +29,10 @@
 
             <div class="form-group">
               <label for="">Mot de passe :</label>
-              <input type="password" class="form-control" id="signpassword" name="password"
+              <input type="password" class="form-control" id="password" name="password"
+              value="<?php if (isset($_POST['mail'])) {
+                  echo htmlspecialchars($_POST['password']);
+                } ?>"
                 placeholder="Créer votre mot de passe" required>
             </div>
 

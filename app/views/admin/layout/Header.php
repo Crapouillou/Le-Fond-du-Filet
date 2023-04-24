@@ -21,27 +21,28 @@
 
             <!--menu principal >600px -->
             <ul class="menunormal">
-                <li><a href="?action=home">Accueil</a></li>
-                <li><a href="?action=allarticle">Tous les articles</a></li>
-                <li><a href="?action=article">Création d'article</a></li>
-                <li><a href="?action=contact">Contact</a></li>
+                <li><a href="?action=homeadmin">Accueil</a></li>
+                
+                <li><a href="?action=createarticleform">Création d'article</a></li>
+                
+                <li><a href="?action=categoryform">Catégorie</a></li>
             </ul>
 
 
             <!--menu burger-->
-            <div id="menu_burger">
+            <div id="menu_burger" class="menu_burger">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
                 <div class="bar3"></div>
             </div>
             <!-- menu ouvert / fermé smartphones -->
-            <section id="nav-smartphone" class="nav-smartphone">
-                <a class="bouton-fermer" id="bouton-fermer">&times;</a>
+            <section id="nav-smartphone" class=" nav-smartphone ">
+                <a class="bouton-fermer" id="bouton-fermer" clas="bouton-ferme">&times;</a>
                 <div class="nav-smartphone-liens">
-                    <li class="menu"><a href="?action=home">Accueil</a></li>
-                    <li class="menu"><a href="?action=allarticle">Tous les articles</a></li>
-                    <li class="menu"><a href="?action=article">Création d'article</a></li>
-                    <li class="menu"><a href="?action=contact">Contact</a></li>
+                    <li class="menu"><a href="?action=homeadmin">Accueil</a></li>
+                    
+                    <li class="menu"><a href="?action=createarticleform">Création d'article</a></li>
+                    <li class="menu"><a href="?action=categoryform">Catégorie</a></li>
                 </div>
             </section>
         </nav>
@@ -59,7 +60,7 @@ if(isset($_SESSION['handle'])){
     // Si l'utilisateur est connecté, afficher son nom d'utilisateur et un lien vers user.php
     echo '<div class="auth">
             <p>Bienvenue, '.$_SESSION['handle'].' !</p>
-            <a href="user.php"><img src="public/images/connexion.png" alt=""></a>
+            <a href="index.php?action=registration"><img src="public/images/connexion.png" alt=""></a>
           </div>';
 } else {
     // Si l'utilisateur n'est pas connecté, afficher un lien vers login.php
@@ -70,7 +71,7 @@ if(isset($_SESSION['handle'])){
 ?>
 </div>
 
-    <!-- <a href="#" class="normal-login"><span>Connexion/Inscription</span></a> -->
+    
 
 
 </header>

@@ -126,7 +126,7 @@ header{
 
 .nav-smartphone {
  height: 100%;
- width: 0;
+ width: 100%;
  position: fixed;
  z-index: 1;
  left: 0;
@@ -147,6 +147,9 @@ header{
  list-style: none;
 }
 
+.nav-smartphone--visible {
+  display: block;
+}
 #nav-smartphone a {
  padding: 8px;
  text-decoration: none;
@@ -219,10 +222,13 @@ header{
 
 
 }
-
+.card-image{
+  width: 100%,
+}
 .card-image img {
-  width: 70%;
-  height: auto;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 
   
 }
@@ -240,6 +246,28 @@ header{
   font-size: 2.5rem;
   color: var(--fontfondblanc);
 }
+
+
+/*----------------------Affichage d'un seul article--------------------------*/
+.article{
+  width: 100%;
+ 
+}
+.article h3{
+  font-size: 3.5rem;
+  text-align: center;
+  color:#020d17;
+  font-family: 'courier_prime_sansregular';
+  margin-bottom: 30px;
+}.article-image img{
+  width: 100%;
+  height:100%;
+  margin-bottom: 30px;
+}
+.article-content{
+  font-size: 1.5rem;
+}
+
 /*------------------carousel------------------------*/
 
 
@@ -256,7 +284,7 @@ header{
   max-width: 800px;
   height: 350px;
   position: relative;
-  overflow: hidden; /* <===  */
+  overflow: hidden; 
   border-radius: 15px;
   
   margin: 0px auto;
@@ -540,6 +568,9 @@ footer {
     width: 25vh;
   }
   /*========== menu principal===========*/
+  #nav-smartphone{
+    display: none;
+  }
   #menu_burger{
       display: none;
   }
@@ -556,6 +587,7 @@ footer {
       flex-direction: row;
       margin-bottom: 30px;
       justify-content: center;
+
 
     }
     
@@ -581,6 +613,9 @@ footer {
 /*====================================barre de recherche===================*/
     .center-header{
       flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      
     }
     
     .search-container{
@@ -600,7 +635,7 @@ footer {
 }
 /*================bouton authentification====================*/
 .auth{
-
+  width: 200px;
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -609,6 +644,7 @@ footer {
 /*========================slider==========================*/
 .slider{
   display: block;
+  margin-top: 30px;
 }
 
 /*===============================section carte accueil======================*/
@@ -622,6 +658,7 @@ footer {
 }
 .card-title{
   font-size: 1.2rem;
+  text-decoration: none;
 }
 footer{
   flex-wrap: wrap;
