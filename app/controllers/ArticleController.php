@@ -35,7 +35,7 @@ class ArticleController
 
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
                 $articleId = $articleModel->createArticle($title, $paragraph, $photoPath, $alt, $category);
-                header("Location: " . $_ENV['SITE_URL'] . "?action=homeadmin");
+                header("Location:  ?action=homeadmin");
                 exit();
             } else {
                 echo "Erreur lors du téléchargement de la photo.";
@@ -77,7 +77,7 @@ class ArticleController
             require_once('app/views/user/Article.php');
         } else {
 
-            header("Location: " . $_ENV['SITE_URL'] . "?action=home");
+            header("Location:  ?action=home");
             exit();
         }
 

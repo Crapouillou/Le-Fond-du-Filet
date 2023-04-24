@@ -27,7 +27,7 @@ class CategoryController
 
 
 
-        header("Location: " . $_ENV['SITE_URL'] . "?action=homeadmin");
+        header("Location: ?action=homeadmin");
         exit();
     }
     public function categoryform()

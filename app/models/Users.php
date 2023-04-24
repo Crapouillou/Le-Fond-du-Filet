@@ -71,7 +71,7 @@ class Users extends DbConnect
             if ($userlog['roles'] == 1) {
                 $_SESSION['admin'] = 1;
                 $_SESSION['handle'] =$handle ;
-                header("Location: " . $_ENV['SITE_URL'] . "?action=homeadmin");
+                header("Location: ?action=homeadmin");
                 exit;
             }
         }

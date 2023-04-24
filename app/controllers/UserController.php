@@ -50,7 +50,7 @@ class UserController
             $user = new Users();
 
             $user->createUser($handle, $mail, $password, $roles); {
-                header("Location: " . $_ENV['SITE_URL'] . "?action=home");
+                header("Location:  ?action=home");
                 exit();
 
             }
@@ -81,12 +81,12 @@ class UserController
 
 
             // Redirigez vers la page d'accueil ou la page appropriée
-            header("Location: " . $_ENV['SITE_URL'] . "?action=home");
+            header("Location: ?action=home");
         } else {
             // Affichez un message d'erreur ou redirigez vers la page de connexion
             $_SESSION['flash'] = "Nom d'utilisateur ou mot de passe incorrect.";
 
-            header("Location: " . $_ENV['SITE_URL'] . "?action=login");
+            header("Location: ?action=login");
         }
     }
     public function edit()
@@ -112,7 +112,7 @@ class UserController
         $newUserData = $user->getUserById($user_id);
         $_SESSION['handle'] = $newUserData['handle'];
 
-        header("Location: " . $_ENV['SITE_URL'] . "?action=home");
+        header("Location: ?action=home");
         exit();
     }
 
@@ -157,7 +157,7 @@ class UserController
             session_unset();
             session_destroy();
 
-            header("Location: " . $_ENV['SITE_URL'] . "?action=login");
+            header("Location: ?action=login");
             exit();
         }
     }
