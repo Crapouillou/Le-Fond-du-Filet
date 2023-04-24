@@ -31,7 +31,7 @@ Voici le schéma conceptuel de celle-ci:
 ## Installation du projet
 
 Lien du repository:
-https://github.com/elemouellic/Locabraz.git
+https://github.com/Crapouillou/Le-Fond-du-Filet
 
 En tout premier lieu, via la console, effectuer un git clone
 
