@@ -17,8 +17,7 @@ use Dotenv\Dotenv;
  */ 
     public function __construct()
     {
-      $dotenv = Dotenv::createImmutable('C:\Users\kercode07\Desktop\BackEnd\sitefoot');
-      $dotenv->load();
+ 
 
         $this->host = $_ENV['DB_HOST'];
         $this->dbname = $_ENV['DB_NAME'];
